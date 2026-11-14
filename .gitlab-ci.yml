@@ -31,7 +31,8 @@ build:
     - for f in webauthnAuthenticate.js webauthnRegister.js passkeysConditionalAuth.js rfc4648.js; do test -s "$T/js/$f" || { echo "missing $f"; exit 1; }; done
     - grep -q 'from "./rfc4648.js"' "$T/js/webauthnAuthenticate.js"
     - test "$(wc -c < "$T/css/bootstrap.min.css")" -lt 100000
-    - grep -q 'SPDX-License-Identifier: MIT' "$T/css/sign-in.css"
+    - |
+      grep -q 'SPDX-License-Identifier: MIT' "$T/css/sign-in.css"
     - docker build -t keycloak-bootstrap:ci .
     - docker run --rm --entrypoint ls keycloak-bootstrap:ci /opt/keycloak/themes/bootstrap-signin-theme/login/resources/js
   artifacts:
