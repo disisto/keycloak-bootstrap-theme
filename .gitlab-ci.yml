@@ -1,0 +1,41 @@
+# Keycloak Bootstrap Theme
+# https://github.com/disisto/keycloak-bootstrap-theme
+#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025-2026 Roberto Di Sisto
+
+# Build test on every push: both Dockerfile targets must build, the finished theme must contain
+# Keycloak's passkey modules, and the CSP tool must compile. The finished theme folder is kept as a
+# job artifact (download it from the pipeline page).
+
+stages:
+  - test
+
+tools:
+  stage: test
+  image: python:3-alpine
+  script:
+    - python -m py_compile tools/csp.py
+    - python tools/csp.py --help > /dev/null
+
+build:
+  stage: test
+  image: docker:27
+  services:
+    - docker:27-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  script:
+    - docker build --target theme --output type=local,dest=dist .
+    - T=dist/bootstrap-signin-theme/login/resources
+    - for f in webauthnAuthenticate.js webauthnRegister.js passkeysConditionalAuth.js rfc4648.js; do test -s "$T/js/$f" || { echo "missing $f"; exit 1; }; done
+    - grep -q 'from "./rfc4648.js"' "$T/js/webauthnAuthenticate.js"
+    - test "$(wc -c < "$T/css/bootstrap.min.css")" -lt 100000
+    - grep -q 'SPDX-License-Identifier: MIT' "$T/css/sign-in.css"
+    - docker build -t keycloak-bootstrap:ci .
+    - docker run --rm --entrypoint ls keycloak-bootstrap:ci /opt/keycloak/themes/bootstrap-signin-theme/login/resources/js
+  artifacts:
+    name: bootstrap-signin-theme
+    paths:
+      - dist/bootstrap-signin-theme
+    expire_in: 30 days

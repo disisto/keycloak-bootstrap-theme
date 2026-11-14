@@ -1,0 +1,595 @@
+/*!
+ * Keycloak Bootstrap Theme
+ * https://github.com/disisto/keycloak-bootstrap-theme
+ * Based on Bootstrap's "Sign-in" example (https://getbootstrap.com/docs/5.3/examples/sign-in/),
+ * MIT, The Bootstrap Authors.
+ *
+ * SPDX-License-Identifier: MIT
+ * Copyright (c) 2025-2026 Roberto Di Sisto
+ */
+/* ===== BOOTSTRAP SIGN-IN TEMPLATE STYLES ===== */
+
+/* Page colours as in Bootstrap's sign-in example (#f5f5f5 light, #212529 dark), keyed on
+   <html data-bs-theme>, which js/theme-init.js sets in <head> before the first paint. The selector
+   beats .bg-body-tertiary on <body>. */
+html[data-bs-theme="light"],
+html[data-bs-theme="light"] body {
+    background: #f5f5f5 !important;
+    color: #212529 !important;
+}
+html[data-bs-theme="dark"],
+html[data-bs-theme="dark"] body {
+    background: #212529 !important;
+    color: #dee2e6 !important;
+}
+
+/* Core Layout */
+html, body { 
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body {
+    display: flex !important;
+    align-items: center !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+    min-height: 100vh !important;
+}
+
+/* ===== FORM STYLING - BOOTSTRAP SIGN-IN AUTHENTIC ===== */
+
+/* Main Form Container - EXACT Bootstrap Original */
+.form-signin {
+    max-width: 360px;
+    padding: 1rem;
+    margin: auto;
+}
+
+.form-signin .form-floating:focus-within {
+    z-index: 2;
+}
+
+/* Form Input Styling - EXACT Bootstrap Sign-in Specific
+   Only the login form stacks username on password (joined corners). Single fields elsewhere
+   (passkey label, OTP boxes, reset password, register) keep Bootstrap's normal rounded corners. */
+.form-signin #kc-form-login input[type="text"],
+.form-signin #kc-form-login input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* Password field: square top corners (joined to the username field), also when the toggle has
+   switched it to type="text" */
+.form-signin #kc-form-login input[type="password"],
+.form-signin #kc-form-login input.password-input-with-toggle,
+.form-signin #kc-form-login #password {
+    margin-bottom: 1rem !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-left-radius: 0.375rem !important;
+    border-bottom-right-radius: 0.375rem !important;
+}
+
+/* Logo Styling - EXACT Bootstrap Original */
+.form-signin img {
+    margin-bottom: 16px;
+}
+
+/* REMOVE BOOTSTRAP VALIDATION STYLING */
+.form-control.is-invalid {
+    border-color: var(--bs-border-color) !important;
+    box-shadow: none !important;
+    background-image: none !important;
+}
+
+/* Field errors: shown under the field (they were hidden, so a wrong password gave no feedback at
+   all). Danger text-emphasis colour: WCAG AA in light and dark (plain --bs-danger is 4.1:1 on #f5f5f5). */
+.invalid-feedback {
+    display: block !important;
+    margin-top: .25rem;
+    font-size: .875rem;
+    color: var(--bs-danger-text-emphasis);
+}
+#kc-form-login .invalid-feedback {
+    margin: -.75rem 0 1rem;
+}
+
+/* Label Styling - EXACT Bootstrap Original - NOT BOLD */
+.form-floating > label,
+.form-check-label {
+    font-weight: normal !important;
+    font-weight: 400 !important;
+}
+
+/* Checkbox Styling */
+.form-check {
+    margin: 1rem 0;
+}
+
+.form-check-input:checked {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+/* Info Links Positioning */
+.login-info-links {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.login-info-links a {
+    color: var(--bs-link-hover-color); /* --bs-primary is below 4.5:1 on the grey page */
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin: 0 0.5rem;
+}
+
+.login-info-links a:hover {
+    text-decoration: underline;
+}
+
+/* Navigation Buttons - CONSISTENT HEIGHT */
+.top-nav-btn {
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    padding: 0.375rem 0.75rem !important;
+    font-size: 0.875rem;
+    border-radius: 0.375rem;
+    border: 1px solid var(--bs-border-color);
+    background: var(--bs-body-bg);
+    color: var(--bs-body-color);
+    transition: all 0.15s ease-in-out;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+}
+
+.top-nav-btn:hover {
+    background: var(--bs-secondary-bg);
+    border-color: var(--bs-border-color-translucent);
+}
+
+.top-nav-btn:focus,
+.top-nav-btn:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: var(--bs-primary) !important;
+}
+
+/* Remove focus outline after click */
+.top-nav-btn:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Dropdown Menus */
+.dropdown-menu {
+    z-index: 1050;
+    border: 1px solid var(--bs-border-color);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border-radius: 0.375rem;
+    min-width: 160px;
+}
+
+/* FIXED: Dropdown Items - Bootstrap Rounded Rectangle Style */
+.dropdown-menu {
+    padding: 0.25rem !important;
+}
+
+.dropdown-item {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.875rem;
+    height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    line-height: 1 !important;
+    border: none !important;
+    background: transparent !important;
+    margin: 0.125rem 0 !important;
+    border-radius: var(--bs-border-radius) !important;
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: var(--bs-info-bg-subtle) !important;
+    color: var(--bs-info-text-emphasis) !important;
+    border: none !important;
+}
+
+.dropdown-item:focus {
+    background-color: var(--bs-info-bg-subtle) !important;
+    color: var(--bs-info-text-emphasis) !important;
+    border: none !important;
+    outline: none !important;
+}
+
+.dropdown-item.active {
+    background-color: var(--bs-primary) !important;
+    color: var(--bs-white) !important;
+    font-weight: 500;
+    border: none !important;
+}
+
+.dropdown-item.active:hover {
+    background-color: var(--bs-primary) !important;
+    color: var(--bs-white) !important;
+}
+
+/* SVG Icons in dropdown */
+.dropdown-item svg {
+    width: 1em;
+    height: 1em;
+    opacity: 0.75;
+    flex-shrink: 0;
+}
+
+.dropdown-item.active svg {
+    opacity: 1;
+    color: var(--bs-white);
+}
+
+/* ===== PASSWORD TOGGLE STYLING ===== */
+
+/* Password toggle button - styled to blend with the input field */
+.password-toggle-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    /* field height, not the container's: a field error below the input must not stretch the button */
+    height: calc(3.5rem + calc(var(--bs-border-width) * 2));
+    z-index: 10;
+    border: none;
+    background: transparent;
+    padding: 0 0.75rem;
+    color: #6c757d; /* Bootstrap text-muted color */
+    cursor: pointer;
+    border-top-right-radius: 0.375rem !important;
+    border-bottom-right-radius: 0.375rem !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Remove hover effects completely */
+.password-toggle-btn:hover {
+    color: #6c757d; /* Keep same color on hover */
+    background-color: transparent; /* No background change */
+}
+
+.password-toggle-btn:focus {
+    outline: none;
+    color: #6c757d; /* Keep same color on focus */
+    background-color: transparent; /* No background change */
+}
+
+.password-toggle-btn:active {
+    color: #6c757d; /* Keep same color when active */
+    background-color: transparent; /* No background change */
+    transform: none;
+}
+
+.password-toggle-btn svg {
+    width: 1.1em;
+    height: 1.1em;
+    opacity: 1; /* Full opacity - no transparency */
+    flex-shrink: 0;
+}
+
+/* Remove all hover/focus effects on the SVG */
+.password-toggle-btn:hover svg,
+.password-toggle-btn:focus svg,
+.password-toggle-btn:active svg {
+    opacity: 1; /* Keep consistent opacity */
+}
+
+/* Adjust password input padding to accommodate toggle button - ensure consistent styling */
+.form-signin .password-input-with-toggle,
+.form-signin #password {
+    padding-right: 2.5rem !important;
+}
+
+/* ===== BUTTON STYLING ===== */
+
+.btn-primary {
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    border-radius: 0.375rem;
+}
+
+/* ===== LINK STYLING ===== */
+
+.form-signin a {
+    color: var(--bs-link-hover-color); /* --bs-primary: 4.1:1 light, 3.4:1 dark, below WCAG AA */
+    text-decoration: none;
+}
+
+.form-signin a:hover {
+    color: var(--bs-link-hover-color);
+    text-decoration: underline;
+}
+
+/* ===== SOCIAL PROVIDERS STYLING - FIXED ===== */
+
+#kc-social-providers {
+    margin-top: 1.5rem;
+    /* Remove display: none - let template control visibility */
+}
+
+#kc-social-providers hr {
+    margin: 1rem 0;
+    color: var(--bs-border-color);
+}
+
+#kc-social-providers h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--bs-secondary);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+#kc-social-providers .btn {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 1rem;
+    text-align: left;
+    border: 1px solid var(--bs-border-color);
+}
+
+#kc-social-providers .btn:hover {
+    background-color: var(--bs-secondary-bg);
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+
+[data-bs-theme="dark"] .form-signin {
+    color: var(--bs-white);
+}
+
+[data-bs-theme="dark"] .form-control {
+    background-color: var(--bs-dark);
+    border-color: var(--bs-gray-600);
+    color: var(--bs-white);
+}
+
+[data-bs-theme="dark"] .form-control:focus {
+    background-color: var(--bs-dark);
+    border-color: #86b7fe; /* Bootstrap's focus border, as in light mode */
+    color: var(--bs-white);
+}
+
+[data-bs-theme="dark"] .form-floating > label {
+    color: var(--bs-gray-300);
+}
+
+[data-bs-theme="dark"] .form-floating > .form-control:focus ~ label,
+[data-bs-theme="dark"] .form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: var(--bs-gray-300);
+}
+
+[data-bs-theme="dark"] .top-nav-btn {
+    background: var(--bs-gray-800);
+    border-color: var(--bs-gray-700);
+    color: var(--bs-gray-100);
+}
+
+[data-bs-theme="dark"] .top-nav-btn:hover {
+    background: var(--bs-gray-700);
+    border-color: var(--bs-gray-600);
+}
+
+[data-bs-theme="dark"] .dropdown-menu {
+    background-color: var(--bs-dropdown-bg);
+    border-color: var(--bs-dropdown-border-color);
+}
+
+[data-bs-theme="dark"] .dropdown-item {
+    color: var(--bs-dropdown-link-color);
+}
+
+[data-bs-theme="dark"] .dropdown-item:hover {
+    background-color: var(--bs-dropdown-link-hover-bg);
+    color: var(--bs-dropdown-link-hover-color);
+}
+
+[data-bs-theme="dark"] .dropdown-item.active {
+    background-color: var(--bs-primary);
+    color: var(--bs-white);
+}
+
+[data-bs-theme="dark"] .password-toggle-btn {
+    color: #adb5bd; /* Bootstrap text-muted for dark theme */
+}
+
+[data-bs-theme="dark"] .password-toggle-btn:hover,
+[data-bs-theme="dark"] .password-toggle-btn:focus {
+    color: #adb5bd; /* Keep same color - no hover effects */
+    background-color: transparent; /* No background change */
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+@media (max-width: 576px) {
+    .form-signin {
+        max-width: 100%;
+        padding: 1rem;
+        margin: 0 1rem;
+    }
+    .top-nav-btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+    }
+    
+    .dropdown-menu {
+        font-size: 0.875rem;
+    }
+}
+
+/* ===== ACCESSIBILITY IMPROVEMENTS ===== */
+
+@media (prefers-reduced-motion: reduce) {
+    .top-nav-btn,
+    .dropdown-item,
+    .btn,
+    .password-toggle-btn {
+        transition: none !important;
+    }
+}
+
+/* Focus indicators for keyboard navigation. Fields and buttons keep Bootstrap's own soft focus
+   ring (light border + 0.25rem shadow); an extra outline on top made a hard double frame. */
+.dropdown-item:focus-visible,
+.password-toggle-btn:focus-visible,
+.form-signin a:focus-visible {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .form-control,
+    .btn,
+    .dropdown-menu {
+        border-width: 2px;
+    }
+}
+
+/* ===== PASSWORD FIELD MARGIN FIX ===== */
+
+/* Ensure proper spacing between password field and subsequent elements */
+.form-signin .form-floating:has(#password),
+.form-signin .form-floating.position-relative {
+    margin-bottom: 1rem !important;
+}
+
+/* Override any conflicting margins */
+.form-signin #password {
+    margin-bottom: 0 !important;
+}
+
+/* ===== TOTP / OTP PAGE STYLES ===== */
+
+/* Wider form for TOTP setup page */
+.form-signin-wide {
+    max-width: 680px !important;
+}
+
+/* QR Code image sizing */
+.qr-code-img {
+    max-width: 200px;
+}
+
+/* Password toggle icon visibility */
+.password-toggle-btn .icon-eye {
+    display: none;
+}
+
+.password-toggle-btn .icon-eye-slash {
+    display: block;
+}
+
+/* ===== OTP 6-DIGIT INPUT STYLING ===== */
+
+.otp-input-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.otp-digit {
+    width: 48px !important;
+    height: 56px !important;
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    padding: 0 !important;
+    border-radius: 0.375rem !important;
+}
+
+.otp-digit:focus {
+    border-color: var(--bs-primary) !important;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+    z-index: 2;
+}
+
+.otp-separator {
+    font-size: 1.5rem;
+    font-weight: 300;
+    padding: 0 0.25rem;
+}
+
+/* Mobile responsive */
+@media (max-width: 400px) {
+    .otp-digit {
+        width: 40px !important;
+        height: 48px !important;
+        font-size: 1.25rem !important;
+    }
+
+    .otp-input-container {
+        gap: 0.25rem;
+    }
+
+    .otp-separator {
+        font-size: 1.25rem;
+        padding: 0 0.125rem;
+    }
+}
+
+/* Dark mode support */
+[data-bs-theme="dark"] .otp-digit {
+    background-color: var(--bs-dark);
+    border-color: var(--bs-gray-600);
+    color: var(--bs-white);
+}
+
+[data-bs-theme="dark"] .otp-digit:focus {
+    background-color: var(--bs-dark);
+    border-color: var(--bs-primary);
+    color: var(--bs-white);
+}
+
+[data-bs-theme="dark"] .otp-separator {
+    color: var(--bs-gray-500);
+}
+
+/* Strict CSP (no style attributes): sizes that used to be inline */
+.kc-logo { max-width: 72px; max-height: 57px; }
+/* Logo: Bootstrap Icon in a soft round badge, primary colour like the sign-in button */
+.kc-logo-badge { display: inline-flex; align-items: center; justify-content: center; width: 72px; height: 72px;
+    border-radius: 50%; color: var(--bs-primary); background: var(--bs-primary-bg-subtle);
+    border: var(--bs-border-width) solid var(--bs-primary-border-subtle); }
+.kc-logo-icon { width: 40px; height: 40px; fill: currentColor; }
+/* Pages put their content in a second .form-signin inside <main class="form-signin">: no second
+   padding, so messages, fields and buttons share one width */
+.form-signin .form-signin { padding: 0; margin-left: 0; margin-right: 0; }
+/* Divider between the password form and the passkey button, styled like the social-login one */
+#kc-passkey { margin-top: 1rem; }
+/* Messages: compact, icon on the first line, same width as the form */
+.kc-alert { font-size: .875rem; line-height: 1.45; padding: .75rem 2.5rem .75rem .875rem; }
+.kc-alert .kc-alert-icon { margin-top: .15rem; }
+.kc-alert .btn-close { padding: .9rem .875rem; background-size: .65rem; }
+/* "or" divider: a faint line broken by a small muted word in the middle (secondary colour, not
+   tertiary: tertiary falls below WCAG AA 4.5:1 in dark mode) */
+.kc-divider { display: flex; align-items: center; gap: .5rem; margin: 0 0 1rem;
+    color: var(--bs-secondary-color); font-size: .75rem; line-height: 1; }
+.kc-divider::before, .kc-divider::after { content: ""; flex: 1; border-top: var(--bs-border-width) solid var(--bs-border-color-translucent); }
+/* Passkey button: filled with Bootstrap's secondary background (what used to be only its hover
+   colour), text in body colour (outline-secondary grey #6c757d was below WCAG AA). Hover/active mix
+   in a little body colour, so it still reacts in light and dark mode. */
+.kc-btn-passkey { --bs-btn-color: var(--bs-body-color); --bs-btn-bg: var(--bs-secondary-bg); --bs-btn-border-color: var(--bs-border-color);
+    --bs-btn-hover-color: var(--bs-body-color); --bs-btn-hover-bg: color-mix(in srgb, var(--bs-secondary-bg), var(--bs-body-color) 8%); --bs-btn-hover-border-color: var(--bs-border-color);
+    --bs-btn-active-color: var(--bs-body-color); --bs-btn-active-bg: color-mix(in srgb, var(--bs-secondary-bg), var(--bs-body-color) 14%); --bs-btn-active-border-color: var(--bs-border-color);
+    --bs-btn-disabled-color: var(--bs-secondary-color); --bs-btn-disabled-bg: var(--bs-secondary-bg); --bs-btn-disabled-border-color: var(--bs-border-color); }
+.form-signin.kc-w-400 { max-width: 400px; }
+.form-signin.kc-w-480 { max-width: 480px; }
+.form-signin.kc-w-600 { max-width: 600px; }
+.kc-scroll-300 { max-height: 300px; overflow-y: auto; }
