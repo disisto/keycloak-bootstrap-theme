@@ -234,6 +234,11 @@
                 <#assign copyrightsignature = "">
             </#if>
         </#if>
+        <#-- Per-realm signature wins over the mode: theme.properties copyrightSignature.<realm name>=... -->
+        <#assign realmSignatureKey = "copyrightSignature." + realm.name>
+        <#if properties[realmSignatureKey]??>
+            <#assign copyrightsignature = properties[realmSignatureKey]>
+        </#if>
         
         <#-- Display copyright if year or signature exists -->
         <#if copyrightyear?? || copyrightsignature??>

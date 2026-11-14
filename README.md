@@ -93,7 +93,7 @@ All options are in `themes/bootstrap-signin-theme/login/theme.properties`.
 | Logo | `customLogoIcon` = any symbol id from `login/sprite.ftl` (round badge in the primary colour), or `customLogoUrl` = an image URL; size in `.kc-logo` (`css/sign-in.css`) |
 | Favicon | `customFaviconPath` (inside the theme) or `customFaviconUrl` |
 | Copyright year | `copyrightYearMode` = `none`, `current`, `range` (with `copyrightStartYear`), `hardcoded` (with `copyrightYear`) |
-| Copyright signature | `copyrightSignatureMode` = `none`, `realm` (realm display name), `custom` (with `copyrightSignature`) |
+| Copyright signature | `copyrightSignatureMode` = `none`, `realm` (realm display name), `custom` (with `copyrightSignature`); per realm: `copyrightSignature.<realm name>=…` (wins over the mode) |
 | Cache-buster | `assetVersion`: Keycloak caches theme files for 30 days; change it whenever you change a file under `resources/` |
 
 **Individual design:** put your styles in `login/resources/css/sign-in.css` (loaded after Bootstrap).
